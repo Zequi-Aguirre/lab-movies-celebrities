@@ -1,0 +1,33 @@
+<h2>New Celebrity</h2>
+<a href="/">Home</a> <br>
+
+<a href="/celebrities/celebrities">All Celebrities</a>
+
+
+{{!-- the action portion of the form is what determines the route that you will be calling when you submit the form --}}
+<form action="/celebrities/create" method="post">
+{{!-- the method of the form is what determines the request type that is being made (get/post) --}}
+
+
+    <label for="animal-name-input">
+        Celebrity Name: 
+        <input id="celebrity-name-input" type="text" placeholder="Tom Cruise" name="name">
+    </label>
+    
+    <label>
+        Occupation: 
+        <input type="text" name="occupation">
+    </label>
+
+    <label>
+        Catch Phrase: 
+        <input type="text" name="catchPhrase">
+    </label>
+
+    
+
+
+    <br>
+    <button>Create</button>
+    {{!-- buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top --}}
+</form>
