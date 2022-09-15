@@ -26,7 +26,7 @@ router.post('/create', (req,res,next) => {
         console.log({CelebrityToCreate})
 
         // *** res.redirect has have the arguement being the same as you would pass to an a tag in the href.
-        res.redirect(`/celebrities`);
+        res.redirect(`/celebrities/celebrities`);
     })
     .catch(err => {
         console.log(err);

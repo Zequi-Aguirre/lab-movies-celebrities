@@ -4,6 +4,7 @@ const router = require("express").Router();
 // all your routes here
 
 const Movie = require('../models/Movie.model');
+const Celebrity = require('../models/Celebrity.model');
 
 // all your routes here
 
@@ -12,11 +13,14 @@ const Movie = require('../models/Movie.model');
 
 router.get('/create', (req,res,next) => {
     console.log('test');
-    res.render('movie/new-movie')
+    res.render('movies/new-movie')
 })
 
 router.post('/create', (req,res,next) => {
     console.log(req.body);
+
+    Celebrity.find()
+    .then(())
 
     const MovieToCreate = {
         title: req.body.title,
