@@ -13,14 +13,23 @@ const Celebrity = require('../models/Celebrity.model');
 
 router.get('/create', (req,res,next) => {
     console.log('test');
-    res.render('movies/new-movie')
+    Celebrity.find()
+    .then((celebritiesFromDb) => {
+        console.log({celebritiesFromDb});
+
+        data = {
+            celebrities: celebritiesFromDb
+        }
+        res.render('movies/new-movie', data)
+
+    })
+    .catch(err => {
+        console.log(err);
+    })
 })
 
 router.post('/create', (req,res,next) => {
-    console.log(req.body);
-
-    Celebrity.find()
-    .then(())
+    console.log(req.body.cast);
 
     const MovieToCreate = {
         title: req.body.title,
@@ -34,7 +43,7 @@ router.post('/create', (req,res,next) => {
         console.log({MovieToCreate})
 
         // *** res.redirect has have the arguement being the same as you would pass to an a tag in the href.
-        res.redirect(`/movies`);
+        res.redirect(`/movies/movies`);
     })
     .catch(err => {
         console.log(err);
@@ -53,6 +62,9 @@ router.get('/movies', (req,res,next) => {
         }
 
         res.render('movies/movies', data)
+    })
+    .catch(err => {
+        console.log(err);
     })
 
 })

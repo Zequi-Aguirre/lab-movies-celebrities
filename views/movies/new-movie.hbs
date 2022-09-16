@@ -1,33 +1,40 @@
 <h2>New Movie</h2>
-<a href="/">Home</a> <br>
 
-<a href="/movies/movies">All Movies</a>
+{{! the action portion of the form is what determines the route that you will be calling when you submit the form }}
+<form action="/movies/create" method="post">
+  {{! the method of the form is what determines the request type that is being made (get/post) }}
 
+  <label for="movie-name-input">
+    Movie Title:
+    <input
+      id="movie-name-input"
+      type="text"
+      placeholder="Top Gun"
+      name="title"
+    />
+  </label>
 
-{{!-- the action portion of the form is what determines the route that you will be calling when you submit the form --}}
-<form action="/celebrities/create" method="post">
-{{!-- the method of the form is what determines the request type that is being made (get/post) --}}
+  <label>
+    Genre:
+    <input type="text" name="genre" />
+  </label>
 
+  <label>
+    Plot:
+    <input type="text" name="plot" />
+  </label>
 
-    <label for="movie-name-input">
-        Movie Title: 
-        <input id="movie-name-input" type="text" placeholder="Top Gun" name="title">
-    </label>
-    
-    <label>
-        Genre: 
-        <input type="text" name="genre">
-    </label>
+  <label for="cast">Choose Cast:
 
-    <label>
-        Plot: 
-        <input type="text" name="plot">
-    </label>
+    <select name="cast" id="cast" name="cast" multiple>
 
-    
+      {{#each celebrities}}
+        <option value={{this._id}}>{{this.name}}</option>
 
-
-    <br>
-    <button>Create</button>
-    {{!-- buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top --}}
+      {{/each}}
+    </select>
+  </label>
+  <br />
+  <button>Create</button>
+  {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
 </form>

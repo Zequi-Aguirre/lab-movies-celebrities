@@ -1,13 +1,15 @@
 <h2>list of celebrities</h2>
-<a href="/">Home</a> <br>
-<a href="/celebrities/create">Create Celebrity</a> <br>
-
+<h3>--------------------------------------------------</h3>
+<br />
 <div class="celebrities__container">
-    {{#each celebrities}}
-        <div class="celebrities__box">
-            <h3>Name: {{this.name}}</h3>
-            <h3>Ocupation: {{this.occupation}}</h3>
-            <h3>Catch Phrase: {{this.catchPhrase}}</h3>
-        </div>
-    {{/each}}
+  {{#each celebrities}}
+    <div class="celebrities__box">
+      <h3>Name: {{this.name}}</h3>
+      <h3>Ocupation: {{this.occupation}}</h3>
+      <h3>Catch Phrase: {{this.catchPhrase}}</h3>
+    </div>
+    <br />
+    <h3>--------------------------------------------------</h3>
+    <br />
+  {{/each}}
 </div>
