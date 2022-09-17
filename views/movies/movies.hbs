@@ -1,7 +1,10 @@
 <h2>Movies</h2>
-
+<hr />
 {{#each movies}}
-  <h3>{{this.title}}</h3>
-  <a href="/movies/details/{{this.id}}">See Details</a>
+  <div>
 
+    <h3>{{this.title}}</h3>
+    <a href="/movies/details/{{this.id}}">See Details</a>
+  </div>
+  <hr />
 {{/each}}

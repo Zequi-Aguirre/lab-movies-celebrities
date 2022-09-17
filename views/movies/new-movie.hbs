@@ -23,16 +23,35 @@
     Plot:
     <input type="text" name="plot" />
   </label>
+  <br />
 
   <label for="cast">Choose Cast:
 
-    <select name="cast" id="cast" name="cast" multiple>
+    {{#each allCelebrities}}
+      <div>
 
-      {{#each celebrities}}
-        <option value={{this._id}}>{{this.name}}</option>
+        <input type="checkbox" value={{id}} name="cast" />
 
-      {{/each}}
-    </select>
+        {{name}}
+        -
+        {{occupation}}
+
+      </div>
+      <hr />
+    {{/each}}
+
+    {{#each otherCelebrities}}
+      <div>
+
+        <input type="checkbox" value={{id}} name="cast" />
+
+        {{name}}
+        -
+        {{occupation}}
+
+      </div>
+      <hr />
+    {{/each}}
   </label>
   <br />
   <button>Create</button>

@@ -8,16 +8,16 @@ const Celebrity = require("../models/Celebrity.model");
 
 // all your routes here
 
-// Create Route
+// ======================= Create Route =============================
 
 router.get("/create", (req, res, next) => {
-  console.log("test");
+  // console.log("test");
   Celebrity.find()
     .then((celebritiesFromDb) => {
-      console.log({ celebritiesFromDb });
+      // console.log({ celebritiesFromDb });
 
       data = {
-        celebrities: celebritiesFromDb,
+        allCelebrities: celebritiesFromDb,
       };
       res.render("movies/new-movie", data);
     })
@@ -27,7 +27,7 @@ router.get("/create", (req, res, next) => {
 });
 
 router.post("/create", (req, res, next) => {
-  console.log(req.body.cast);
+  // console.log(req.body.cast);
 
   const MovieToCreate = {
     title: req.body.title,
@@ -38,7 +38,7 @@ router.post("/create", (req, res, next) => {
 
   Movie.create(MovieToCreate)
     .then((MovieToCreate) => {
-      console.log({ MovieToCreate });
+      // console.log({ MovieToCreate });
 
       // *** res.redirect has have the arguement being the same as you would pass to an a tag in the href.
       res.redirect(`/movies/movies`);
@@ -50,10 +50,12 @@ router.post("/create", (req, res, next) => {
     });
 });
 
+// ======================= Read Route =============================
+
 router.get("/movies", (req, res, next) => {
   Movie.find()
     .then((moviesFromDb) => {
-      console.log({ moviesFromDb });
+      // console.log({ moviesFromDb });
 
       data = {
         movies: moviesFromDb,
@@ -67,73 +69,101 @@ router.get("/movies", (req, res, next) => {
 });
 
 router.get("/details/:movieId", (req, res, next) => {
-  console.log({ params: req.params.movieId });
+  // console.log({ params: req.params.movieId });
 
   Movie.findById(req.params.movieId)
     .populate("cast")
     .then((movieFromDb) => {
-      console.log({ movieFromDb });
+      // console.log({ movieFromDb });
 
       data = {
         movie: movieFromDb,
       };
 
-      res.render("movies/movie-detail", data);
+      res.render("movies/movie-details", data);
     })
     .catch((err) => {
-      console.log({ err });
+      // console.log({ err });
     });
 });
+
+// ======================= Delete Route =============================
 
 router.post("/:movieId/delete", (req, res, next) => {
-  console.log({ params: req.params.movieId });
+  // console.log({ params: req.params.movieId });
 
   Movie.findByIdAndRemove(req.params.movieId)
     .then((response) => {
-      console.log({ response });
+      // console.log({ response });
 
       res.redirect("/movies/movies");
     })
     .catch((err) => {
-      console.log({ err });
+      // console.log({ err });
     });
 });
 
-router.get("/movies/:id/edit", (req, res, next) => {
-  console.log({ params: req.params.movieId });
+// ======================= Update Route =============================
 
-  Movie.findById(req.params.movieId)
-    .then((movieFromDb) => {
-      Celebrity.find()
-        .then((celebritiesFromDb) => {
-          console.log({ celebritiesFromDb });
+router.get("/:movieID/edit", (req, res, next) => {
+  Celebrity.find()
+    .then((allTheCelebrities) => {
+      Movie.findById(req.params.movieID).then((theMovie) => {
+        // console.log(theMovie);
+        let myCelebrities = [];
+        let otherCelebrities = [];
+        allTheCelebrities.forEach((eachCelebrity) => {
+          if (theMovie.cast.includes(eachCelebrity.id)) {
+            // console.log("its the same");
+            // console.log(eachCelebrity.name);
+            myCelebrities.push(eachCelebrity);
+          } else {
+            otherCelebrities.push(eachCelebrity);
+          }
+        });
 
+        res.render("movies/edit-movie", {
+          myCelebrities: myCelebrities,
+          otherCelebrities: otherCelebrities,
+          movieID: req.params.movieID,
+        });
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/update/:movieID", (req, res, next) => {
+  let ids = req.body.cast;
+
+  Movie.findByIdAndUpdate(
+    req.params.movieID,
+    // {$push: {animals: ids}})
+    // we dont need the push anymore because we are pre-filling the
+    // checkboxes so all the animals we already have will get sent though again
+    // on the next subsequent edit
+    { cast: ids }
+  )
+    .then((result) => {
+      // res.redirect("/movies/movies");
+      Movie.findById(req.params.movieID)
+        .populate("cast")
+        .then((movieFromDb) => {
+          console.log(movieFromDb);
           data = {
             movie: movieFromDb,
-            celebrities: celebritiesFromDb,
           };
-          res.render("movies/edit-movie", data);
+
+          res.render("movies/movie-details", data);
         })
         .catch((err) => {
-          console.log(err);
+          console.log({ err });
         });
+      // res.render("movies/movie-details");
     })
     .catch((err) => {
-      console.log({ err });
-    });
-});
-
-router.post("/movies/:id/edit", (req, res, next) => {
-  console.log({ params: req.params.movieId });
-
-  Movie.findByIdAndRemove(req.params.movieId)
-    .then((response) => {
-      console.log({ response });
-
-      res.redirect("/movies/movies");
-    })
-    .catch((err) => {
-      console.log({ err });
+      console.log(err);
     });
 });
 
