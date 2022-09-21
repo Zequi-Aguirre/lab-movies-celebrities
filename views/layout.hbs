@@ -24,6 +24,22 @@
       <br />
       <a href="/movies/movies">All Movies</a>
       <br />
+      <a href="/signup">Sign Up</a>
+      <br />
+      {{#unless theUser}}
+        <a href="/login">Login</a>
+      {{/unless}}
+      <br /><br />
+      {{#if theUser}}
+
+        <a href="/profile">User Profile</a>
+        <br />
+        <br />
+
+        <form action="/logout" method="post">
+          <button>Logout</button>
+        </form>
+      {{/if}}
     </nav>
     <div class="container">
       {{{body}}}

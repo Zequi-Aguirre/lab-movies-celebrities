@@ -1,0 +1,14 @@
+<h1>User Profile</h1>
+
+<h4>Username: {{theUser.username}}</h4>
+
+<h5>This users locations with animals:</h5>
+
+{{theUser.location.address}}
+{{theUser.location.city}}
+{{theUser.location.state}}
+{{theUser.location.zip}}
+
+<a href="/locations/{{theUser.location._id}}">See This location</a>
+
+<p>Thats literally all the info we have for now</p>
