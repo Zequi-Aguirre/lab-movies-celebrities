@@ -39,7 +39,7 @@ app.use(
       maxAge: 600000,
     }, // ADDED code below !!!
     store: MongoStore.create({
-      mongoUrl: "mongodb://localhost/lab-movies-celebrities",
+      mongoUrl: `mongodb://localhost/${projectName}`,
     }),
   })
 );

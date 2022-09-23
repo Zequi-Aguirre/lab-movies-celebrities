@@ -21,3 +21,24 @@
   <button>Edit Movie</button>
   {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
 </form>
+<br /><br />
+
+{{#if liked}}
+
+  <form action="/{{movie.id}}/unlikeMovie" method="post">
+
+    <button>Unlike Movie</button>
+    {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
+  </form>
+
+{{/if}}
+
+{{#unless liked}}
+
+  <form action="/{{movie.id}}/likeMovie" method="post">
+
+    <button>Like Movie</button>
+    {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
+  </form>
+
+{{/unless}}

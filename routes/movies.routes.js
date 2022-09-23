@@ -5,6 +5,7 @@ const router = require("express").Router();
 
 const Movie = require("../models/Movie.model");
 const Celebrity = require("../models/Celebrity.model");
+const User = require("../models/User");
 
 // all your routes here
 
@@ -71,17 +72,26 @@ router.get("/movies", (req, res, next) => {
 router.get("/details/:movieId", (req, res, next) => {
   // console.log({ params: req.params.movieId });
 
-  Movie.findById(req.params.movieId)
-    .populate("cast")
-    .then((movieFromDb) => {
-      // console.log({ movieFromDb });
+  User.findById(req.session.currentlyLoggedIn._id)
+    .then((currentlyLoggedIn) => {
+      Movie.findById(req.params.movieId)
+        .populate("cast")
+        .then((movieFromDb) => {
+          const movieLiked = currentlyLoggedIn.likedMovies.includes(
+            movieFromDb._id
+          );
+          console.log({ movieLiked });
 
-      data = {
-        movie: movieFromDb,
-      };
+          data = {
+            movie: movieFromDb,
+            liked: movieLiked,
+          };
 
-      res.render("movies/movie-details", data);
+          res.render("movies/movie-details", data);
+        });
     })
+    .catch((err) => console.log(err))
+
     .catch((err) => {
       // console.log({ err });
     });

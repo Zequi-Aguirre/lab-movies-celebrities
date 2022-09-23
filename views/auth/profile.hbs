@@ -1,14 +1,23 @@
 <h1>User Profile</h1>
 
 <h4>Username: {{theUser.username}}</h4>
+<h4>Password: {{theUser.password}}</h4>
 
-<h5>This users locations with animals:</h5>
+<h5>Liked Movies:</h5>
 
-{{theUser.location.address}}
-{{theUser.location.city}}
-{{theUser.location.state}}
-{{theUser.location.zip}}
+{{#each theUser.likedMovies}}
+  <div>
 
-<a href="/locations/{{theUser.location._id}}">See This location</a>
+    <h3>{{title}}</h3>
+    <a href="/movies/details/{{id}}">See Details</a>
+
+    <form action="/{{id}}/unlikeMovie" method="post">
+
+      <button>Unlike Movie</button>
+      {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
+    </form>
+  </div>
+  <hr />
+{{/each}}
 
 <p>Thats literally all the info we have for now</p>

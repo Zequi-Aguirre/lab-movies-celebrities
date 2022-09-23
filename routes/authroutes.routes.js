@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const Movie = require("../models/Movie.model");
 const bcryptjs = require("bcryptjs");
 
 router.get("/signup", (req, res, next) => {
@@ -44,7 +45,7 @@ router.post("/login", (req, res, next) => {
         console.log("found user", resultFromDB);
         req.session.currentlyLoggedIn = resultFromDB;
         console.log(req.session);
-        res.redirect("/");
+        res.redirect("/profile");
         return;
       } else {
         res.redirect("/login");
@@ -57,7 +58,7 @@ router.get("/profile", (req, res, next) => {
   User.findById(req.session.currentlyLoggedIn._id)
     .populate("likedMovies")
     .then((theUser) => {
-      console.log(theUser);
+      // console.log(theUser);
       res.render("auth/profile", { theUser: theUser });
     })
     .catch((err) => {
@@ -70,6 +71,78 @@ router.post("/logout", (req, res, next) => {
     if (err) console.log(err);
     res.redirect("/");
   });
+});
+
+router.post("/:movieID/likeMovie", (req, res, next) => {
+  let id = req.params.movieID;
+  // console.log("id ============================================");
+  // console.log(id);
+
+  Movie.findById(id)
+    .then((movie) => {
+      // console.log(
+      //   "movie========================================================="
+      // );
+      // console.log(movie);
+      User.findByIdAndUpdate(req.session.currentlyLoggedIn._id, {
+        $addToSet: { likedMovies: movie },
+      }).then((result) => {
+        // console.log("result ============================================");
+        // console.log(result);
+        res.redirect("/profile");
+      });
+    })
+
+    // we dont need the push anymore because we are pre-filling the
+    // checkboxes so all the animals we already have will get sent though again
+    // on the next subsequent edit
+    // { likedMovies: ids })
+
+    .catch((err) => {
+      console.log(
+        "error ========================================================="
+      );
+      console.log(err);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.post("/:movieID/unlikeMovie", (req, res, next) => {
+  let id = req.params.movieID;
+  // console.log("id ============================================");
+  // console.log(id);
+
+  Movie.findById(id)
+    .then((movie) => {
+      console.log(
+        "movie========================================================="
+      );
+      console.log(movie);
+      User.findByIdAndUpdate(req.session.currentlyLoggedIn._id, {
+        $pull: { likedMovies: movie._id },
+      }).then((result) => {
+        // console.log("result ============================================");
+        // console.log(result);
+        res.redirect("/profile");
+      });
+    })
+
+    // we dont need the push anymore because we are pre-filling the
+    // checkboxes so all the animals we already have will get sent though again
+    // on the next subsequent edit
+    // { likedMovies: ids })
+
+    .catch((err) => {
+      console.log(
+        "error ========================================================="
+      );
+      console.log(err);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 module.exports = router;
