@@ -1,8 +1,29 @@
 console.log("movies.js connected");
 
+const queryInput = document.querySelector("#query");
+const searchButton = document.querySelector("#searchButton");
+
+// function getTopCast(movieCast) {
+//   const options = {
+//     method: "GET",
+//     headers: {
+//       "X-RapidAPI-Key": "22bb122a8bmshdc51eafb1829ebcp1ffd6ejsn4749669dbab2",
+//       "X-RapidAPI-Host": "imdb8.p.rapidapi.com",
+//     },
+//   };
+
+//   fetch(
+//     `https://imdb8.p.rapidapi.com/title/get-top-cast?tconst=${movieCast}`,
+//     options
+//   )
+//     .then((response) => response.json())
+//     .then((response) => console.log(response))
+//     .catch((err) => console.error(err));
+// }
+
 function searchMovies() {
   document.querySelector(".movies").innerHTML = "";
-  const query = document.querySelector("#query").value;
+  const query = queryInput.value;
 
   console.log(query);
   const options = {
@@ -19,7 +40,12 @@ function searchMovies() {
       const list = data.d;
       list.map((movie) => {
         console.log({ movie });
+        const movieTopCast = movie.id;
+
+        // getTopCast(movieTopCast);
+
         const name = movie.l;
+        const cast = movie.s;
         const poster = movie.i.imageUrl;
         const movieHTML = `<li><img src="${poster}"> <h2>${name}</h2>
         
@@ -51,6 +77,11 @@ function searchMovies() {
     <input type="text" name="image" value="${poster}" />
   </label>
 
+  <label style="display:none" >
+    Cast:
+    <input type="text" name="castString" value="${cast}" />
+  </label>
+
   
   <button>Create</button>
   
@@ -58,10 +89,24 @@ function searchMovies() {
 </li>
         `;
         document.querySelector(".movies").innerHTML += movieHTML;
-        console.log(movie);
+        // console.log(movie);
       });
     })
     .catch((err) => console.error(err));
 }
 
-document.querySelector("#searchButton").addEventListener("click", searchMovies);
+if (searchButton) {
+  searchButton.addEventListener("click", searchMovies);
+}
+
+if (queryInput) {
+  queryInput.addEventListener("keypress", function (event) {
+    // If the user presses the "Enter" key on the keyboard
+    if (event.key === "Enter") {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      searchButton.click();
+    }
+  });
+}

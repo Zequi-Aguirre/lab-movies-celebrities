@@ -36,7 +36,7 @@ router.post("/create", (req, res, next) => {
 
 router.get("/celebrities", (req, res, next) => {
   Celebrity.find().then((celebritiesFromDb) => {
-    console.log({ celebritiesFromDb });
+    // console.log({ celebritiesFromDb });
 
     data = {
       celebrities: celebritiesFromDb,

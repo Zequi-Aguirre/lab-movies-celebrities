@@ -41,9 +41,8 @@ router.post("/create", (req, res, next) => {
   Movie.create(MovieToCreate)
     .then((MovieToCreate) => {
       // console.log({ MovieToCreate });
-
       // *** res.redirect has have the arguement being the same as you would pass to an a tag in the href.
-      res.redirect(`/movies/movies`);
+      // res.redirect(`/movies/movies`);
     })
     .catch((err) => {
       console.log(err);
@@ -97,20 +96,20 @@ router.get("/details/:movieId", (req, res, next) => {
       .catch((err) => {
         console.log({ err });
       });
+  } else {
+    Movie.findById(req.params.movieId)
+      .populate("cast")
+      .then((movieFromDb) => {
+        data = {
+          movie: movieFromDb,
+        };
+
+        res.render("movies/movie-details", data);
+      })
+      .catch((err) => {
+        console.log({ err });
+      });
   }
-
-  Movie.findById(req.params.movieId)
-    .populate("cast")
-    .then((movieFromDb) => {
-      data = {
-        movie: movieFromDb,
-      };
-
-      res.render("movies/movie-details", data);
-    })
-    .catch((err) => {
-      console.log({ err });
-    });
 });
 
 // ======================= Delete Route =============================
