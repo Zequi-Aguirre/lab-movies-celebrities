@@ -13,39 +13,70 @@
   </head>
 
   <body>
-    <nav>
-      <a href="/">Home</a>
-      <br />
-      <a href="/celebrities/create">Create Celebrity</a>
-      <br />
-      <a href="/celebrities/celebrities">All Celebrities</a>
-      <br />
-      <a href="/movies/create">Create Movie</a>
-      <br />
-      <a href="/movies/movies">All Movies</a>
-      <br />
-      <a href="/signup">Sign Up</a>
-      <br />
+
+    <nav class="page__menu page__custom-settings menu">
+      <ul class="menu__list r-list">
+        <li class="menu__group"><a
+            class="menu__link r-link text-underlined"
+            href="/">Home</a></li>
+        <li class="menu__group"><a
+            class="menu__link r-link text-underlined"
+            href="/celebrities/create">Create Celebrity</a></li>
+        <li class="menu__group"><a
+            class="menu__link r-link text-underlined"
+            href="/celebrities/celebrities">All Celebrities</a>
+            </li>
+        <li class="menu__group"><a
+            class="menu__link r-link text-underlined"
+                 <a href="/movies/create">Create Movie</a>
+
+            </li>
+        <li class="menu__group"><a
+            class="menu__link r-link text-underlined"
+            
+                   href="/movies/movies">All Movies</a>
+
+            </li>
+        <li class="menu__group"><a
+            class="menu__link r-link text-underlined"
+            href="/signup">Sign Up</a>
+            </li>
+
       {{#unless theUser}}
-        <a href="/login">Login</a>
+
+
+        <li class="menu__group"><a
+            class="menu__link r-link text-underlined"
+            href="/login">Login</a>
+            </li>
       {{/unless}}
-      <br /><br />
+
       {{#if theUser}}
 
-        <a href="/profile">User Profile</a>
-        <br />
-        <br />
+        <li class="menu__group"><a
+            class="menu__link r-link text-underlined"
+            href="/profile">User Profile</a>
+            </li>
 
-        <form action="/logout" method="post">
-          <button>Logout</button>
+        <form action="/logout"  method="post">
+          <button id="logout" class="menu__link r-link text-underlined">Logout</button>
         </form>
       {{/if}}
+
+
+        
     </nav>
+    <br>
+    <br><br>
+
+    
     <div class="container">
       {{{body}}}
     </div>
 
     <script src="/javascripts/script.js"></script>
+    <script src="/javascripts/movies.js"></script>
+<link rel="stylesheet" href="/stylesheets/new-movie.css" />
   </body>
 
 </html>

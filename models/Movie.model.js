@@ -13,6 +13,9 @@ const movieSchema = new Schema(
     plot: {
       type: String,
     },
+    image: {
+      type: String,
+    },
     cast: {
       type: [{ type: Schema.Types.ObjectId, ref: "Celebrity" }],
     },

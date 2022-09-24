@@ -34,6 +34,7 @@ router.post("/create", (req, res, next) => {
     title: req.body.title,
     genre: req.body.genre,
     plot: req.body.plot,
+    image: req.body.image,
     cast: req.body.cast,
   };
 
@@ -72,28 +73,43 @@ router.get("/movies", (req, res, next) => {
 router.get("/details/:movieId", (req, res, next) => {
   // console.log({ params: req.params.movieId });
 
-  User.findById(req.session.currentlyLoggedIn._id)
-    .then((currentlyLoggedIn) => {
-      Movie.findById(req.params.movieId)
-        .populate("cast")
-        .then((movieFromDb) => {
-          const movieLiked = currentlyLoggedIn.likedMovies.includes(
-            movieFromDb._id
-          );
-          console.log({ movieLiked });
+  if (req.session.currentlyLoggedIn) {
+    User.findById(req.session.currentlyLoggedIn._id)
+      .then((currentlyLoggedIn) => {
+        Movie.findById(req.params.movieId)
+          .populate("cast")
+          .then((movieFromDb) => {
+            const movieLiked = currentlyLoggedIn.likedMovies.includes(
+              movieFromDb._id
+            );
+            console.log({ movieLiked });
 
-          data = {
-            movie: movieFromDb,
-            liked: movieLiked,
-          };
+            data = {
+              movie: movieFromDb,
+              liked: movieLiked,
+            };
 
-          res.render("movies/movie-details", data);
-        });
+            res.render("movies/movie-details", data);
+          });
+      })
+      .catch((err) => console.log(err))
+
+      .catch((err) => {
+        console.log({ err });
+      });
+  }
+
+  Movie.findById(req.params.movieId)
+    .populate("cast")
+    .then((movieFromDb) => {
+      data = {
+        movie: movieFromDb,
+      };
+
+      res.render("movies/movie-details", data);
     })
-    .catch((err) => console.log(err))
-
     .catch((err) => {
-      // console.log({ err });
+      console.log({ err });
     });
 });
 

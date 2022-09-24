@@ -74,6 +74,9 @@ router.post("/logout", (req, res, next) => {
 });
 
 router.post("/:movieID/likeMovie", (req, res, next) => {
+  if (!req.session.currentlyLoggedIn) {
+    res.redirect("/login");
+  }
   let id = req.params.movieID;
   // console.log("id ============================================");
   // console.log(id);

@@ -1,7 +1,7 @@
 <h2>New Movie</h2>
 
 {{! the action portion of the form is what determines the route that you will be calling when you submit the form }}
-<form action="/movies/create" method="post">
+{{!-- <form action="/movies/create" method="post">
   {{! the method of the form is what determines the request type that is being made (get/post) }}
 
   <label for="movie-name-input">
@@ -22,6 +22,11 @@
   <label>
     Plot:
     <input type="text" name="plot" />
+  </label>
+
+  <label>
+    Image Link:
+    <input type="text" name="image" />
   </label>
   <br />
 
@@ -56,4 +61,9 @@
   <br />
   <button>Create</button>
   {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
-</form>
+</form> --}}
+
+<input type="text" id="query" />
+<button id="searchButton">Search Movies</button>
+
+<div class="movies"></div>

@@ -1,10 +1,36 @@
 <h2>Movies</h2>
 <hr />
-{{#each movies}}
+{{!-- {{#each movies}}
+
   <div>
 
     <h3>{{title}}</h3>
     <a href="/movies/details/{{id}}">See Details</a>
   </div>
   <hr />
-{{/each}}
+
+{{/each}} --}}
+
+<div class="movies">
+  {{#each movies}}
+
+    <li><img src="{{image}}" />
+      <h2>{{title}}</h2>
+      <a href="/movies/details/{{id}}"><h4>See Details</h4></a></li>
+
+    {{!-- <li><a href="/movies/details/{{id}}"><img src="{{image}}" />
+        <h2>{{title}}</h2></a></li>
+
+    <li>
+      <div class="image_title">
+        <a href="/movies/details/{{id}}">{{title}}</a>
+      </div>
+      <a href="/movies/details/{{id}}"><img
+          src={{image}}
+          alt={{title}}
+          border="0"
+        /></a>
+    </li> --}}
+  {{/each}}
+
+</div>
