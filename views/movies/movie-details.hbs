@@ -2,7 +2,7 @@
 <br />
 <br />
 <br />
-<h2>{{movie.title}} - Details</h2>
+<h2>{{movie.title}} - Details - Likes: {{likesCount}}</h2>
 <h4>Genre: {{movie.genre}}</h4>
 <h4>Plot: {{movie.plot}}</h4>
 <br />
@@ -35,9 +35,7 @@
     {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
   </form>
 
-{{/if}}
-
-{{#unless liked}}
+{{else}}
 
   <form action="/{{movie.id}}/likeMovie" method="post">
 
@@ -45,4 +43,4 @@
     {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
   </form>
 
-{{/unless}}
+{{/if}}

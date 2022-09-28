@@ -13,18 +13,12 @@ const User = require("../models/User");
 
 router.get("/create", (req, res, next) => {
   // console.log("test");
-  Celebrity.find()
-    .then((celebritiesFromDb) => {
-      // console.log({ celebritiesFromDb });
 
-      data = {
-        allCelebrities: celebritiesFromDb,
-      };
-      res.render("movies/new-movie", data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (!req.session.currentlyLoggedIn) {
+    res.redirect("/login");
+  }
+
+  res.render("movies/new-movie");
 });
 
 router.post("/create", (req, res, next) => {
@@ -40,7 +34,9 @@ router.post("/create", (req, res, next) => {
 
   Movie.create(MovieToCreate)
     .then((MovieToCreate) => {
-      // console.log({ MovieToCreate });
+      console.log({ MovieToCreate });
+      req.flash("success", "Movie added to list.");
+
       // *** res.redirect has have the arguement being the same as you would pass to an a tag in the href.
       // res.redirect(`/movies/movies`);
     })
@@ -83,13 +79,28 @@ router.get("/details/:movieId", (req, res, next) => {
             );
             console.log({ movieLiked });
 
-            data = {
-              movie: movieFromDb,
-              liked: movieLiked,
-            };
+            //=======================================  Likes count
 
-            res.render("movies/movie-details", data);
+            User.find().then((allUsers) => {
+              let likes = 0;
+
+              allUsers.map((user) => {
+                if (user.likedMovies.includes(req.params.movieId)) {
+                  likes++;
+                }
+              });
+
+              data = {
+                movie: movieFromDb,
+                liked: movieLiked,
+                likesCount: likes,
+              };
+
+              res.render("movies/movie-details", data);
+            });
           });
+
+        // ======================================= Likes count
       })
       .catch((err) => console.log(err))
 

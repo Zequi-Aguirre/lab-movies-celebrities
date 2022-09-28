@@ -19,13 +19,13 @@
         <li class="menu__group"><a
             class="menu__link r-link text-underlined"
             href="/">Home</a></li>
-        <li class="menu__group"><a
+        {{!-- <li class="menu__group"><a
             class="menu__link r-link text-underlined"
             href="/celebrities/create">Create Celebrity</a></li>
         <li class="menu__group"><a
             class="menu__link r-link text-underlined"
             href="/celebrities/celebrities">All Celebrities</a>
-            </li>
+            </li> --}}
         <li class="menu__group"><a
             class="menu__link r-link text-underlined"
                  <a href="/movies/create">Create Movie</a>
@@ -37,22 +37,11 @@
                    href="/movies/movies">All Movies</a>
 
             </li>
-        <li class="menu__group"><a
-            class="menu__link r-link text-underlined"
-            href="/signup">Sign Up</a>
-            </li>
 
-      {{#unless theUser}}
-
-
-        <li class="menu__group"><a
-            class="menu__link r-link text-underlined"
-            href="/login">Login</a>
-            </li>
-      {{/unless}}
 
       {{#if theUser}}
 
+     
         <li class="menu__group"><a
             class="menu__link r-link text-underlined"
             href="/profile">User Profile</a>
@@ -61,11 +50,35 @@
         <form action="/logout"  method="post">
           <button id="logout" class="menu__link r-link text-underlined">Logout</button>
         </form>
+
+      {{else}}
+   <li class="menu__group"><a
+            class="menu__link r-link text-underlined"
+            href="/signup">Sign Up</a>
+            </li>
+
+        <li class="menu__group"><a
+            class="menu__link r-link text-underlined"
+            href="/login">Login</a>
+            </li>
+
       {{/if}}
 
 
         
     </nav>
+
+    {{#if errorMessage}}
+    <div class="error-div">
+        {{errorMessage}}
+    </div>
+    {{/if}}
+    
+    {{#if successMessage}}
+    <div class="success-div">
+        {{successMessage}}
+    </div>
+    {{/if}}
     <br>
     <br><br>
 

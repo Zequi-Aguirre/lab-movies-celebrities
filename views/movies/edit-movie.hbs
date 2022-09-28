@@ -1,40 +1,30 @@
 <h3>Modify Cast</h3>
 
-<form action="/movies/update/{{movieID}}" method="post">
+<form action="/celebrities/create/{{movieID}}" method="post">
+  {{! the method of the form is what determines the request type that is being made (get/post) }}
 
-  <label for="cast">Choose Cast:
-
-    {{#each myCelebrities}}
-      <br />
-      <div>
-
-        <input type="checkbox" value={{id}} name="cast" checked="checked" />
-
-        {{name}}
-        -
-        {{occupation}}
-
-      </div>
-      <br />
-      <hr />
-    {{/each}}
-
-    <h4>not in cast</h4>
-    {{#each otherCelebrities}}
-      <br />
-      <div>
-
-        <input type="checkbox" value={{id}} name="cast" />
-
-        {{name}}
-        -
-        {{occupation}}
-
-      </div>
-      <br />
-      <hr />
-    {{/each}}
+  <label for="celebrity-name-input">
+    Celebrity Name:
+    <input
+      id="celebrity-name-input"
+      type="text"
+      placeholder="Tom Cruise"
+      name="name"
+    />
   </label>
-  <button>Confirm</button>
+
+  <label>
+    Occupation:
+    <input type="text" name="occupation" />
+  </label>
+
+  <label>
+    Catch Phrase:
+    <input type="text" name="catchPhrase" />
+  </label>
+
+  <br />
+  <button>Create</button>
+  {{! buttons in forms will auto sync to the form and when clicked will submit the data from the form using the endpoint (action) and the method (method) that is defined in the form parameters at the top }}
 
 </form>

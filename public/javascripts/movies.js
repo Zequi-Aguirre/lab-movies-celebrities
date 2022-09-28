@@ -3,24 +3,6 @@ console.log("movies.js connected");
 const queryInput = document.querySelector("#query");
 const searchButton = document.querySelector("#searchButton");
 
-// function getTopCast(movieCast) {
-//   const options = {
-//     method: "GET",
-//     headers: {
-//       "X-RapidAPI-Key": "22bb122a8bmshdc51eafb1829ebcp1ffd6ejsn4749669dbab2",
-//       "X-RapidAPI-Host": "imdb8.p.rapidapi.com",
-//     },
-//   };
-
-//   fetch(
-//     `https://imdb8.p.rapidapi.com/title/get-top-cast?tconst=${movieCast}`,
-//     options
-//   )
-//     .then((response) => response.json())
-//     .then((response) => console.log(response))
-//     .catch((err) => console.error(err));
-// }
-
 function searchMovies() {
   document.querySelector(".movies").innerHTML = "";
   const query = queryInput.value;
@@ -29,7 +11,8 @@ function searchMovies() {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "22bb122a8bmshdc51eafb1829ebcp1ffd6ejsn4749669dbab2",
+      "X-RapidAPI-Key": `22bb122a8bmshdc51eafb1829ebcp1ffd6ejsn4749669dbab2`,
+      // "X-RapidAPI-Key": process.env.IMDBKEY,
       "X-RapidAPI-Host": "imdb8.p.rapidapi.com",
     },
   };
@@ -92,7 +75,10 @@ function searchMovies() {
         // console.log(movie);
       });
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.error(err);
+      next(err);
+    });
 }
 
 if (searchButton) {

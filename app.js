@@ -15,6 +15,11 @@ const hbs = require("hbs");
 
 const app = express();
 
+// error messages with flash
+
+let flash = require("connect-flash");
+app.use(flash());
+
 // ℹ️ This function is getting exported from the config folder. It runs most middlewares
 require("./config")(app);
 
@@ -48,6 +53,8 @@ app.use(function (req, res, next) {
   // im making a template variable called theUser and imequalling it to
   // the user object in the session
   res.locals.theUser = req.session.currentlyLoggedIn;
+  res.locals.errorMessage = req.flash("error");
+  res.locals.successMessage = req.flash("success");
   next();
 });
 

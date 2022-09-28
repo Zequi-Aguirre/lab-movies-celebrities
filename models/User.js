@@ -5,6 +5,8 @@ const userSchema = new Schema(
   {
     username: String,
     password: String,
+    tempPassword: Boolean,
+    email: String,
     likedMovies: {
       type: [
         {
